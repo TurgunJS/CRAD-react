@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch } from 'react-redux';
-import { saveProduct } from '../../store/actions';
+import { saveProduct, updateProduct } from '../../store/actions';
 
-function ProductForm() {
+function ProductForm({ editProduct }) {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -13,7 +13,12 @@ function ProductForm() {
       price: +values.price
     }
 
-    dispatch(saveProduct(newProduct))
+    if (editProduct) {
+      dispatch(updateProduct(editProduct.id, newProduct));
+    } else {
+      dispatch(saveProduct(newProduct));
+    }
+
     form.resetFields();
   };
 
@@ -21,12 +26,26 @@ function ProductForm() {
     console.log("Failed:", errorInfo);
   };
 
+  useEffect(() => {
+    form.resetFields();
+    if (!editProduct) return;
+    const values = {
+      productName: editProduct.name,
+      price: editProduct.price,
+    } 
+
+    form.setFieldsValue(values)
+  }, [form, editProduct])
+
+  console.log('editProduct', editProduct)
+
   return (
     <div>
       <div>Product Form</div>
       <Form
         form={form}
         name="basic"
+        initialValues={editProduct}
         labelCol={{
           span: 8,
         }}

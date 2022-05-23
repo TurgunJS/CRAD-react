@@ -7,16 +7,20 @@ import ProductForm from './components/ProductForm/ProductForm';
 
 function App() {
   const [showForm, setShowForm] = useState(false);
+  const [editProduct, setEditProduct] = useState(null)
   return (
     <div className="App">
       <Button 
-        onClick={() => setShowForm(!showForm)} 
+        onClick={() => {
+          setShowForm(!showForm);
+          setEditProduct(null);
+        }} 
         type="primary"
       >
         Add Product
       </Button>
-      {showForm && <ProductForm />}
-      <Products />
+      <ProductForm editProduct={editProduct} />
+      <Products setEditProduct={setEditProduct} />
     </div>
   );
 }

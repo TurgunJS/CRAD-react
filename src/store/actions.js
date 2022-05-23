@@ -39,9 +39,7 @@ export const saveProduct = (product) => async (dispatch) => {
   //     })
   //   })
   
-  console.log('my product', product);
   const response = await axios.post(`${API_URL}/products/create`, product);
-  console.log('res product', response.data);
   dispatch({
     type: actions.CREATE_PRODUCT,
     payload: response.data
@@ -49,4 +47,8 @@ export const saveProduct = (product) => async (dispatch) => {
   // await dispatch(fetchProducts());
 };
 
-
+export const updateProduct = (id, product) => async (dispatch) => {  
+  await axios.put(`${API_URL}/products/update/${id}/`, product);
+  
+  await dispatch(fetchProducts());
+};

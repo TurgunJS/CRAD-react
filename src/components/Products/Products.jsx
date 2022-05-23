@@ -1,12 +1,14 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchProducts} from '../../store/actions';
+import { fetchProducts } from '../../store/actions';
+import { Button } from 'antd';
 
-function Products() {
+function Products({setEditProduct}) {
   const dispatch = useDispatch();
   const products = useSelector((store => store.products));
   const isFetching = useSelector((store => store.productsFetching));
+
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -30,6 +32,12 @@ function Products() {
            <div>{product.id}</div>
            <div>{product.name}</div>
            <div>{product.price}</div>
+           <Button 
+            type="ghost" 
+            onClick={() => setEditProduct(product)}
+            >
+              Edit
+            </Button>
          </div>
        ))}
      </div>}
