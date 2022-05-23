@@ -1,8 +1,7 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchDataSource} from '../../store/actions';
+import {fetchProducts} from '../../store/actions';
 
 function Products() {
   const dispatch = useDispatch();
@@ -10,17 +9,23 @@ function Products() {
   const isFetching = useSelector((store => store.productsFetching));
 
   useEffect(() => {
-    dispatch(fetchDataSource());
+    dispatch(fetchProducts());
   }, [dispatch])
 
-  console.log('isFetching', isFetching)
-  console.log('products', products)
+  const compare = (a, b) => {
+    if (a.name > b.name) return 1
+    else if(a.name < b.name) return -1
+    else return 0
+  }
+
+  const sorted = products.sort(compare);
+
   return (
     <div>
      <h1>Products</h1>
      {isFetching && <div>Loading...</div>}
      {!isFetching && <div>
-       {products.map(product => (
+       {sorted.map(product => (
          <div key={product.id} style={{display: 'flex', justifyContent: 'space-around'}}>
            <div>{product.id}</div>
            <div>{product.name}</div>

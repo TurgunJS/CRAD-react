@@ -17,19 +17,36 @@ export const setFetchingProducts = () => ({
   type: actions.FETCH_PRODUCTS
 });
 
-export const setProducts = (products) => ({
+export const setProducts = (data) => ({
   type: actions.RECEIVE_PRODUCTS,
-  payload: products
+  payload: data
 });
 
-export const fetchDataSource = () => (dispatch) => {
+export const fetchProducts = () => (dispatch) => {
   dispatch(setFetchingProducts());
 
   axios.get(`${API_URL}/products/`)
     .then(function (response) {
       dispatch(setProducts(response.data))
-    })
-    
+    })  
+};
+
+export const saveProduct = (product) => async (dispatch) => {
+  // axios.post(`${API_URL}/products/create`, product)
+  //   .then(function (response) {
+  //     dispatch(fetchProducts()).then(response => {
+  //       dispatch()
+  //     })
+  //   })
+  
+  console.log('my product', product);
+  const response = await axios.post(`${API_URL}/products/create`, product);
+  console.log('res product', response.data);
+  dispatch({
+    type: actions.CREATE_PRODUCT,
+    payload: response.data
+  })
+  // await dispatch(fetchProducts());
 };
 
 
