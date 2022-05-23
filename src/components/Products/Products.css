@@ -1,0 +1,13 @@
+.containerApi{
+background-color: linear-gradient(90deg, red, blue);
+}
+
+/* .spanOne{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+} */
+
+.constainerForm {
+    width: 700px;
+}

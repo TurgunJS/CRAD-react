@@ -3,15 +3,6 @@ import axios from 'axios';
 
 const API_URL = 'http://167.99.218.30/api';
 
-export const addQuestion = question => ({
-  type: actions.QUESTION_ADD,
-  payload: question
-});
-
-export const removeQuestion = id => ({
-  type: actions.QUESTION_REMOVE,
-  payload: { id }
-});
 
 export const setFetchingProducts = () => ({
   type: actions.FETCH_PRODUCTS
@@ -32,19 +23,13 @@ export const fetchProducts = () => (dispatch) => {
 };
 
 export const saveProduct = (product) => async (dispatch) => {
-  // axios.post(`${API_URL}/products/create`, product)
-  //   .then(function (response) {
-  //     dispatch(fetchProducts()).then(response => {
-  //       dispatch()
-  //     })
-  //   })
+
   
   const response = await axios.post(`${API_URL}/products/create`, product);
   dispatch({
     type: actions.CREATE_PRODUCT,
     payload: response.data
   })
-  // await dispatch(fetchProducts());
 };
 
 export const updateProduct = (id, product) => async (dispatch) => {  

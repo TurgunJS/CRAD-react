@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../store/actions';
 import { Button } from 'antd';
+import './Products.css'
 
 function Products({setEditProduct}) {
   const dispatch = useDispatch();
@@ -15,29 +16,34 @@ function Products({setEditProduct}) {
   }, [dispatch])
 
   const compare = (a, b) => {
-    if (a.name > b.name) return 1
-    else if(a.name < b.name) return -1
+    if (a.id > b.id) return 1
+    else if(a.id < b.id) return -1
     else return 0
   }
 
   const sorted = products.sort(compare);
 
   return (
-    <div>
-     <h1>Products</h1>
+    <div className='containerApi'>
+      <h1 style={{color: "red" }}>Products</h1>
      {isFetching && <div>Loading...</div>}
      {!isFetching && <div>
        {sorted.map(product => (
          <div key={product.id} style={{display: 'flex', justifyContent: 'space-around'}}>
-           <div>{product.id}</div>
-           <div>{product.name}</div>
-           <div>{product.price}</div>
-           <Button 
-            type="ghost" 
-            onClick={() => setEditProduct(product)}
-            >
-              Edit
-            </Button>
+
+                <span style={{color: "red" }}>ID</span>
+                <div>{product.id}</div>
+                <span style={{color: "blue"}}>NAME</span>
+                <div>{product.name}</div>
+                <span style={{color: "green"}}>PRICE</span>
+                <div>{product.price}</div>
+                <Button 
+                  type="ghost" 
+                  onClick={() => setEditProduct(product)}
+                  >
+                    Edit
+                  </Button>
+      
          </div>
        ))}
      </div>}

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { Button, Form, Input } from "antd";
 import { useDispatch } from 'react-redux';
 import { saveProduct, updateProduct } from '../../store/actions';
+import '../Products/Products.css'
 
 function ProductForm({ editProduct }) {
   const dispatch = useDispatch();
@@ -10,7 +11,9 @@ function ProductForm({ editProduct }) {
   const onFinish = (values) => {
     const newProduct = {
       name: values.productName,
-      price: +values.price
+      price: +values.price,
+      id: values.id,
+      // image: values.image,
     }
 
     if (editProduct) {
@@ -32,6 +35,8 @@ function ProductForm({ editProduct }) {
     const values = {
       productName: editProduct.name,
       price: editProduct.price,
+      id: editProduct.id,
+      // image: editProduct.image,
     } 
 
     form.setFieldsValue(values)
@@ -40,7 +45,7 @@ function ProductForm({ editProduct }) {
   console.log('editProduct', editProduct)
 
   return (
-    <div>
+    <div className="constainerForm">
       <div>Product Form</div>
       <Form
         form={form}
@@ -82,6 +87,32 @@ function ProductForm({ editProduct }) {
         >
           <Input />
         </Form.Item>
+
+        <Form.Item
+          label="Id"
+          name="id"
+          rules={[
+            {
+              required: true,
+              message: "Please input Product Id!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        {/* <Form.Item
+          label="Image"
+          name="image"
+          rules={[
+            {
+              required: true,
+              message: "Please input Product Image!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item> */}
 
         <Form.Item
           wrapperCol={{
